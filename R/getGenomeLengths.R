@@ -11,12 +11,13 @@
 #' @examples
 #' setPositionsCNV(CNVvault_class)
 
-getGenomeLengths <- function(ReturnClass, genome="hg19", FinalChrom="chrX") {
+getGenomeLengths <- function(ReturnClass, genome="hg19", StartChrom="chr1", FinalChrom="chrX") {
         ## This function will download the chromosome sizes from UCSC
         Chr_Sizes <- getChromInfoFromUCSC(genome)
 
-        CutOff <- Chr_Sizes$chrom %>% grepl(paste(FinalChrom,"$", sep=""), .) %>% which()
-        Chr_Sizes <- Chr_Sizes[1:CutOff,]
+        eCutOff <- Chr_Sizes$chrom %>% grepl(paste(FinalChrom,"$", sep=""), .) %>% which()
+        sCutOff <- Chr_Sizes$chrom %>% grepl(paste(StartChrom,"$", sep=""), .) %>% which()
+        Chr_Sizes <- Chr_Sizes[sCutOff:eCutOff,]
         if( "size" %in% colnames(Chr_Sizes)) {
                 Chr_Sizes <- c(Chr_Sizes$size) %>% setNames(Chr_Sizes$chrom)
         } else if ( "length" %in% colnames(Chr_Sizes)) {
