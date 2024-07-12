@@ -11,9 +11,9 @@
 #' @examples
 #' setPositionsCNV(CNVvault_class)
 
-setPositionsCNV <- function(ReturnClass, genome="hg19", FinalChrom="chrX") {
+setPositionsCNV <- function(ReturnClass, genome="hg19", StartChrom="chr1",FinalChrom="chrX") {
         ## This function will download the chromosome sizes from UCSC
-        Chr_Sizes <- getGenomeLengths(genome=genome, FinalChrom=FinalChrom)
+        Chr_Sizes <- getGenomeLengths(genome=genome, StartChrom=StartChrom, FinalChrom=FinalChrom)
         ## This works out the chromosome starts to correctly position them on the x axis.
         Chr_Starts <- lapply(1:length(Chr_Sizes), function(x) {
                 sum(Chr_Sizes[1:x])
